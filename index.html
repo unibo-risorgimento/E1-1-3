@@ -8,9 +8,19 @@
   <style>
     * { box-sizing: border-box; }
 
+    /* Forza il font su TUTTI gli elementi (anche button su iOS) */
+    :root{
+      --font: Calibri, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    }
+    html, body, button, input, select, textarea, a, p, h1, h2, h3, h4, h5, h6, span, div{
+      font-family: var(--font);
+    }
+    button, input, select, textarea{
+      font: inherit; /* evita font “di default” del browser */
+    }
+
     body{
       margin:0;
-      font-family: Calibri, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
       background:#6b6b6b;
       padding:
         env(safe-area-inset-top)
@@ -27,7 +37,7 @@
       border-radius: 10px;
     }
 
-    /* header come nello screenshot: logo centrato, lingua in alto a dx */
+    /* header: logo centrato, lingua in alto a dx */
     .top{
       position: relative;
       text-align: center;
@@ -35,11 +45,11 @@
     }
 
     .logo{
-      width: min(360px, 82vw);   /* dimensione “grande” come screenshot */
+      width: min(280px, 68vw); /* PIÙ PICCOLO */
       height: auto;
       max-width: 100%;
       display:block;
-      margin: 6px auto 0;
+      margin: 10px auto 0;
     }
 
     .lang{
@@ -49,8 +59,8 @@
       background:#b3261e;
       color:#fff;
       border:0;
-      width: 56px;
-      height: 56px;
+      width: 52px;
+      height: 52px;
       font-weight:700;
       cursor:pointer;
       border-radius: 12px;
@@ -76,6 +86,7 @@
       margin: 16px 0;
       border-radius: 12px;
       line-height: 1.1;
+      font-family: var(--font); /* extra-sicurezza */
     }
 
     @media (max-width: 480px){
@@ -88,8 +99,11 @@
       .lang{
         top: 8px;
         right: 8px;
-        width: 54px;
-        height: 54px;
+        width: 50px;
+        height: 50px;
+      }
+      .logo{
+        width: min(260px, 72vw); /* leggermente più piccolo su mobile */
       }
     }
   </style>
