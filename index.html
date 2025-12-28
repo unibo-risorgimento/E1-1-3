@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aula</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:#6b6b6b;
+      padding:
+        env(safe-area-inset-top)
+        env(safe-area-inset-right)
+        env(safe-area-inset-bottom)
+        env(safe-area-inset-left);
+    }
+
+    .frame{
+      width: min(520px, 100%);
+      margin: 24px auto;
+      background:#fff;
+      padding: 24px 18px 28px;
+      border-radius: 10px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap: wrap;
+    }
+
+    .logo{
+      width: clamp(140px, 42vw, 220px);
+      height:auto;
+      opacity:.9;
+      max-width: 100%;
+    }
+
+    .lang{
+      background:#b3261e;
+      color:#fff;
+      border:0;
+      padding: 10px 12px;
+      font-weight:700;
+      cursor:pointer;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    h1{
+      text-align:center;
+      font-size: clamp(24px, 7vw, 34px);
+      margin: 14px 0 18px;
+      font-weight:500;
+      line-height: 1.15;
+    }
+
+    .btn{
+      display:block;
+      width:100%;
+      text-align:center;
+      text-decoration:none;
+      background:#b3261e;
+      color:#fff;
+      padding: clamp(16px, 4.8vw, 26px) clamp(14px, 4vw, 18px);
+      font-size: clamp(22px, 6vw, 34px);
+      margin: 16px 0;
+      border-radius: 10px;
+      line-height: 1.1;
+    }
+
+    @media (max-width: 480px){
+      .frame{
+        margin: 0;
+        min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        border-radius: 0;
+        padding: 18px 16px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="frame">
+    <div class="top">
+      <img class="logo" src="logo.png" alt="Logo" />
+      <button class="lang" id="langBtn">EN</button>
+    </div>
+
+    <h1 id="roomTitle">Aula 1.3.7</h1>
+
+    <a class="btn" id="mapBtn" href="#">Mappa</a>
+    <a class="btn" id="reportBtn" href="#">Segnalazioni</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const room = params.get("room") || "1.3";
+    let lang = params.get("lang") || "it";
+
+    const strings = {
+      it: { title: `Aula ${room}`, map: "Mappa", report: "Segnalazioni", langBtn: "EN" },
+      en: { title: `Room ${room}`, map: "Map", report: "Reports", langBtn: "IT" }
+    };
+
+    // MAPPA: link fisso (quello che mi hai dato)
+    const MAP_URL = "https://app.mappedin.com/map/681891b804e97f000b1e1311?location=s_369f00ba922d6aff";
+
+    // Segnalazioni: metti qui il tuo link (se vuoi puoi lasciarlo così)
+    const REPORT_BASE = "https://tuosito.it/segnalazioni";
+
+    function render() {
+      document.documentElement.lang = lang;
+      document.getElementById("roomTitle").textContent = strings[lang].title;
+      document.getElementById("mapBtn").textContent = strings[lang].map;
+      document.getElementById("reportBtn").textContent = strings[lang].report;
+      document.getElementById("langBtn").textContent = strings[lang].langBtn;
+
+      // Link Mappa fisso
+      document.getElementById("mapBtn").href = MAP_URL;
+
+      // (opzionale) Passa aula e lingua alle segnalazioni
+      document.getElementById("reportBtn").href =
+        `${REPORT_BASE}?room=${encodeURIComponent(room)}&lang=${lang}`;
+    }
+
+    document.getElementById("langBtn").addEventListener("click", () => {
+      lang = (lang === "it") ? "en" : "it";
+      params.set("lang", lang);
+      history.replaceState({}, "", `${location.pathname}?${params.toString()}`);
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
