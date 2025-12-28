@@ -40,6 +40,8 @@
       height:auto;
       opacity:.9;
       max-width: 100%;
+      max-height: 80px;
+      object-fit: contain;
     }
 
     .lang{
@@ -89,14 +91,14 @@
 <body>
   <div class="frame">
     <div class="top">
-      <img class="logo" src="logo.png" alt="Logo" />
+      <img class="logo" src="unibo-logo-big.png" alt="Alma Mater Studiorum – Università di Bologna" />
       <button class="lang" id="langBtn">EN</button>
     </div>
 
     <h1 id="roomTitle">Aula 1.3.7</h1>
 
-    <a class="btn" id="mapBtn" href="#">Mappa</a>
-    <a class="btn" id="reportBtn" href="#">Segnalazioni</a>
+    <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">Mappa</a>
+    <a class="btn" id="reportBtn" href="#" target="_blank" rel="noopener">Segnalazioni</a>
   </div>
 
   <script>
@@ -109,10 +111,10 @@
       en: { title: `Room ${room}`, map: "Map", report: "Reports", langBtn: "IT" }
     };
 
-    // MAPPA: link fisso (quello che mi hai dato)
+    // MAPPA: link fisso
     const MAP_URL = "https://app.mappedin.com/map/681891b804e97f000b1e1311?location=s_369f00ba922d6aff";
 
-    // Segnalazioni: metti qui il tuo link (se vuoi puoi lasciarlo così)
+    // Segnalazioni: metti qui il tuo link
     const REPORT_BASE = "https://tuosito.it/segnalazioni";
 
     function render() {
@@ -122,10 +124,8 @@
       document.getElementById("reportBtn").textContent = strings[lang].report;
       document.getElementById("langBtn").textContent = strings[lang].langBtn;
 
-      // Link Mappa fisso
       document.getElementById("mapBtn").href = MAP_URL;
 
-      // (opzionale) Passa aula e lingua alle segnalazioni
       document.getElementById("reportBtn").href =
         `${REPORT_BASE}?room=${encodeURIComponent(room)}&lang=${lang}`;
     }
